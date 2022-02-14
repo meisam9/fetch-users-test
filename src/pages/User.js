@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { getUserDetais } from '../store/User/user.actions'
 import {FaFacebook,FaLinkedin,FaYoutube,FaTwitter, FaGoogle} from 'react-icons/fa';
 import './user.style.css'
@@ -8,11 +8,19 @@ import './user.style.css'
 export default function User() {
     const {id} = useParams();
     const dispatch = useDispatch();
-    const user = useSelector(state=>state.user)
+    const navigate = useNavigate();
+    const user = useSelector(state=>state.user);
     useEffect(()=>{
-        dispatch(getUserDetais(id));
+      dispatch(getUserDetais(id));
+      
     },[id])
-    console.log(user)
+
+    useEffect(()=>{
+      if(user.message.length > 1){
+        navigate('/notFound')
+      }
+    },[user.message])
+  
   return (
     <div className="container d-flex justify-content-center">
     <div className="card p-3 py-4">

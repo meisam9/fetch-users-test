@@ -1,4 +1,5 @@
 
+import { useEffect, useState } from "react";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,9 +10,12 @@ const Login = () => {
     const dispatch = useDispatch()
     const user = useSelector(state=>state.user);
     const handleLogin = (data) => {
-        dispatch(loginUser(data))
-        document.querySelector('#email').value=" ";
-        document.querySelector('#password').value=" ";
+        if(!user.loading){
+            dispatch(loginUser(data))
+            document.querySelector('#email').value=" ";
+            document.querySelector('#password').value="";
+
+        }
     }
 
     return (
@@ -39,13 +43,13 @@ const Login = () => {
                                 {errors.password && <p className="mt-1" style={{color:'red'}}>{errors.password.message}</p>}
                             </Form.Group>
 
-                            <Button className="mt-2" variant="success btn-block" type="submit">
-                                Login
+                            <Button className="mt-2" id="btn-load" variant="success btn-block" type="submit" disabled={user.loading}>
+                               {user.loading? 'loading': 'Login'}
                             </Button>
                         </Form>
                     </Col>
                 </Row>
-                <h5 className="text-center text-danger">{user.message ? user.message : null}</h5>
+                <h5 className="text-center text-danger">{user.message.length ? user.message : null }</h5>
                 <h6 className="mt-5 p-5 text-center text-secondary ">Copyright © 2022 Novin Dev. All Rights Reserved.</h6>
             </Container>
     );
