@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+ a.active {
+  color: #fff;
+  background: blue;
+  padding:1rem;
+  text-decoration:none;
+}
+a.active:hover{
+  color:white
+}
+a.inactive:hover{
+  color:cyan
+}
+ a.inactive {
+  font-style: italic;
+  text-decoration:none;
+}
